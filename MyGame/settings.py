@@ -3,6 +3,7 @@
 # screen color  
 BLACK = (0,0,0)
 BLUE = (50,50,255)
+RED = (255,50,50)
 
 # screen dimensions
 WIDTH = 800
@@ -16,3 +17,6 @@ RUNNING = True
 PLAYER_ACC = 2 
 PLAYER_FRICTION = -0.12
 
+# mob attritubutes
+MOB_ACC = 2
+MOB_FRICTION = -0.12

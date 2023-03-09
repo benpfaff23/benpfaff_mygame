@@ -6,6 +6,8 @@ from pygame.sprite import Sprite
 
 from settings import *
 
+from random import randint
+
 vec = pg.math.Vector2
 
 # create a player class
@@ -45,3 +47,41 @@ class Player(Sprite):
             print("im off the bottom")
         if self.rect.y < 0:
             print("im off the top")
+
+class Mob(Sprite):
+    def __init__(self):
+        Sprite.__init__(self)
+        self.image = pg.Surface((50,50))
+        self.image.fill(RED)
+        self.rect = self.image.get_rect()
+        self.pos = vec(WIDTH/2, HEIGHT/2)
+        self.vel = vec(0,0)
+        self.acc = vec(0,0)
+        self.cofric = 0.1
+        self.canjump = False
+    def behavior(self):
+        # acc goes up
+        self.acc.y = MOB_ACC
+        self.acc.x = -MOB_ACC
+        self.acc.y = -MOB_ACC
+        self.acc.x = MOB_ACC
+        if self.rect.x > WIDTH:
+            self.acc.x = -MOB_ACC
+            self.vel.x *= -1
+        if self.rect.x < 0:
+            self.acc.x = MOB_ACC
+            self.vel.x *= -1
+        if self.rect.y < 0:
+            # reduces velocity 
+            self.vel.y *= -1
+            self.acc.y = MOB_ACC
+        if self.rect.y > HEIGHT:
+            self.acc.y = -MOB_ACC
+            self.vel.y *= -1
+    def update(self):
+        self.acc = self.vel * MOB_FRICTION
+        self.behavior()
+        self.vel += self.acc
+        self.pos += self.vel + 0.5 * self.acc
+        self.rect.center = self.pos
+    
